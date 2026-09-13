@@ -11,6 +11,7 @@ const FaqData = [
   { id: 4, icon: "📅" },
   { id: 5, icon: "💳" },
   { id: 6, icon: "🔒" },
+  { id: 7, icon: "📱" },
 ];
 
 window.FaqData = FaqData;
