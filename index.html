@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AutoBook AI | وكيل الحجوزات الذكي</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <style>
+        .font-ar { font-family: 'Cairo', sans-serif; }
+        .font-en { font-family: 'Inter', sans-serif; }
+    </style>
+</head>
+<body id="bodyTag" class="bg-slate-950 text-slate-100 font-ar antialiased selection:bg-indigo-500 selection:text-white">
+
+    <!-- Header / Navbar -->
+    <nav class="max-w-6xl mx-auto px-6 py-5 flex justify-between items-center border-b border-slate-800">
+        <div class="flex items-center gap-2">
+            <span class="w-3.5 h-3.5 rounded-full bg-indigo-500 animate-pulse"></span>
+            <span class="text-xl font-black text-white">AutoBook<span class="text-indigo-400">.ai</span></span>
+        </div>
+        
+        <!-- Language Switcher -->
+        <div class="flex items-center gap-3">
+            <select id="langSelect" onchange="changeLanguage(this.value)" class="bg-slate-900 border border-slate-700 text-xs text-slate-200 rounded-lg px-2.5 py-1.5 focus:outline-none">
+                <option value="ar">العربية (AR)</option>
+                <option value="en">English (EN)</option>
+                <option value="fr">Français (FR)</option>
+            </select>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="max-w-4xl mx-auto px-6 pt-16 pb-12 text-center">
+        <div id="heroBadge" class="inline-block px-4 py-1 rounded-full bg-indigo-950/80 border border-indigo-500/30 text-indigo-400 text-xs font-bold mb-6">
+            🚀 بديل موظف الاستقبال الذي يكلفك آلاف الدولارات
+        </div>
+        <h1 id="heroTitle" class="text-3xl md:text-5xl font-black leading-tight mb-5">
+            حوّل زوارك إلى <span class="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-emerald-400">مواعيد مؤكدة</span> على مدار الساعة
+        </h1>
+        <p id="heroDesc" class="text-sm md:text-base text-slate-400 max-w-xl mx-auto mb-8">
+            موظف مبيعات وحجوزات ذكي يجيب على أسئلة زبائنك بلباقة، ويحجز المواعيد في تقويمك تلقائياً دون أي تدخل بشري.
+        </p>
+    </section>
+
+    <!-- Live Interactive Demo -->
+    <section class="max-w-2xl mx-auto px-6 pb-20">
+        <div class="bg-slate-900 border border-slate-800 rounded-3xl p-5 shadow-2xl">
+            <div class="flex items-center justify-between pb-3 border-b border-slate-800 mb-3">
+                <div class="flex items-center gap-2">
+                    <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-ping"></span>
+                    <span id="demoTitle" class="text-xs font-bold text-white">تجربة حية: موظف استقبال ذكي</span>
+                </div>
+                <span class="text-[10px] bg-slate-800 text-slate-300 px-2 py-0.5 rounded border border-slate-700">متصل الآن</span>
+            </div>
+
+            <!-- Chat Window -->
+            <div id="chatBox" class="h-60 overflow-y-auto space-y-3 p-2 text-xs">
+                <div class="flex items-start gap-2">
+                    <div id="initialMsg" class="bg-indigo-600/20 border border-indigo-500/30 text-indigo-200 p-3 rounded-2xl max-w-xs">
+                        أهلاً بك! 👋 أنا مساعدك الذكي لحجز المواعيد. كيف يمكنني مساعدتك اليوم؟
+                    </div>
+                </div>
+            </div>
+
+            <!-- Chat Input -->
+            <div class="flex gap-2 mt-3 pt-3 border-t border-slate-800">
+                <input id="userInput" type="text" placeholder="اكتب استفسارك أو اطلب موعداً..." class="flex-1 bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-xs focus:outline-none focus:border-indigo-500 text-white">
+                <button onclick="handleSend()" class="bg-indigo-600 hover:bg-indigo-500 text-white px-4 py-2 rounded-xl font-bold text-xs transition">إرسال</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section class="max-w-4xl mx-auto px-6 pb-24 text-center">
+        <h2 id="pricingTitle" class="text-2xl font-black mb-2">اختر الباقة المناسبة لعيادتك أو شركتك</h2>
+        <p id="pricingSub" class="text-slate-400 text-xs mb-10">الدفع آمن ومتاح بالبطاقة البنكية أو عبر RedotPay</p>
+
+        <div class="grid md:grid-cols-2 gap-6 max-w-2xl mx-auto">
+            <!-- Plan 1 -->
+            <div class="bg-slate-900 border border-slate-800 p-6 rounded-3xl text-right">
+                <h3 class="font-bold text-base text-white">الباقة الأساسية</h3>
+                <div class="text-3xl font-black text-white my-4">199$<span class="text-xs text-slate-400">/شهرياً</span></div>
+                <ul class="space-y-2 text-xs text-slate-300 mb-6">
+                    <li>✓ حتى 1,000 محادثة شهرياً</li>
+                    <li>✓ ربط مع Google Calendar</li>
+                    <li>✓ دعم على مدار الساعة</li>
+                </ul>
+                <button onclick="openPaymentModal(199)" class="w-full bg-slate-800 hover:bg-slate-700 text-white py-2.5 rounded-xl font-bold text-xs transition">اشترك الآن</button>
+            </div>
+
+            <!-- Plan 2 -->
+            <div class="bg-slate-900 border-2 border-indigo-500 p-6 rounded-3xl text-right relative">
+                <div class="absolute -top-3 left-1/2 -translate-x-1/2 bg-indigo-500 text-white px-2 py-0.5 rounded-full text-[10px] font-bold">الأكثر طلباً</div>
+                <h3 class="font-bold text-base text-white">باقة المحترفين</h3>
+                <div class="text-3xl font-black text-white my-4">399$<span class="text-xs text-slate-400">/شهرياً</span></div>
+                <ul class="space-y-2 text-xs text-slate-300 mb-6">
+                    <li>✓ محادثات وحجوزات غير محدودة</li>
+                    <li>✓ ربط مباشر مع WhatsApp</li>
+                    <li>✓ لوحة تحكم بالعملاء المكتسبين</li>
+                </ul>
+                <button onclick="openPaymentModal(399)" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white py-2.5 rounded-xl font-bold text-xs transition shadow-lg shadow-indigo-600/30">اشترك الآن</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Payment Modal (with RedotPay Integration) -->
+    <div id="paymentModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm hidden items-center justify-center p-4 z-50">
+        <div class="bg-slate-900 border border-slate-800 p-6 rounded-3xl max-w-sm w-full text-right">
+            <h3 class="font-bold text-lg text-white mb-2">إتمام الاشتراك</h3>
+            <p class="text-xs text-slate-400 mb-4">اختر طريقة الدفع المناسبة لك:</p>
+            
+            <div class="space-y-3 mb-6">
+                <!-- RedotPay Option -->
+                <div class="border border-indigo-500/40 bg-indigo-950/20 p-3 rounded-xl flex items-center justify-between">
+                    <div class="text-right">
+                        <div class="font-bold text-xs text-white">الدفع عبر RedotPay / USDT</div>
+                        <div class="text-[10px] text-slate-400">تحويل مباشر وسريع للمحفظة</div>
+                    </div>
+                    <span class="text-xs bg-indigo-600 px-2 py-1 rounded text-white font-bold">موصى به</span>
+                </div>
+                
+                <!-- Deposit address display -->
+                <div class="bg-slate-950 p-2.5 rounded-lg border border-slate-800 text-[11px] text-slate-300 break-all text-left font-mono">
+                    ضع_معرف_RedotPay_الخاص_بك_هنا
+                </div>
+            </div>
+
+            <button onclick="closeModal()" class="w-full bg-slate-800 hover:bg-slate-700 text-slate-300 py-2.5 rounded-xl text-xs font-bold transition">إغلاق</button>
+        </div>
+    </div>
+
+    <!-- Interactive Script -->
+    <script>
+        const translations = {
+            ar: {
+                dir: 'rtl',
+                font: 'font-ar',
+                heroBadge: '🚀 بديل موظف الاستقبال الذي يكلفك آلاف الدولارات',
+                heroTitle: 'حوّل زوارك إلى <span class="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-emerald-400">مواعيد مؤكدة</span> على مدار الساعة',
+                heroDesc: 'موظف مبيعات وحجوزات ذكي يجيب على أسئلة زبائنك بلباقة، ويحجز المواعيد في تقويمك تلقائياً دون أي تدخل بشري.',
+                demoTitle: 'تجربة حية: موظف استقبال ذكي',
+                initialMsg: 'أهلاً بك! 👋 أنا مساعدك الذكي لحجز المواعيد. كيف يمكنني مساعدتك اليوم؟',
+                inputPlace: 'اكتب استفسارك أو اطلب موعداً...',
+                replyMsg: 'يسعدني ذلك! لدينا موعد متاح غداً الساعة 5:00 مساءً. هل ترغب بتأكيد حجزك برقم هاتفك؟ 📅'
+            },
+            en: {
+                dir: 'ltr',
+                font: 'font-en',
+                heroBadge: '🚀 Replace expensive receptionists with AI',
+                heroTitle: 'Turn website visitors into <span class="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-emerald-400">booked clients</span> 24/7',
+                heroDesc: 'An intelligent AI booking receptionist that answers inquiries, explains services, and confirms appointments automatically.',
+                demoTitle: 'Live Demo: AI Booking Agent',
+                initialMsg: 'Hello! 👋 I am your AI booking assistant. How can I help you today?',
+                inputPlace: 'Type your question or request a booking...',
+                replyMsg: 'Great! We have a spot available tomorrow at 5:00 PM. Would you like to confirm it with your phone number? 📅'
+            },
+            fr: {
+                dir: 'ltr',
+                font: 'font-en',
+                heroBadge: '🚀 Remplacez les réceptionnistes coûteux par l\'IA',
+                heroTitle: 'Transformez vos visiteurs en <span class="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-emerald-400">rendez-vous confirmés</span> 24/7',
+                heroDesc: 'Un agent IA intelligent qui répond aux questions, présente vos services et réserve automatiquement des créneaux.',
+                demoTitle: 'Démo en direct : Agent de réservation IA',
+                initialMsg: 'Bonjour ! 👋 Je suis votre assistant de réservation IA. Comment puis-je vous aider aujourd\'hui ?',
+                inputPlace: 'Tapez votre message ou demandez un rendez-vous...',
+                replyMsg: 'Parfait ! Nous avons une disponibilité demain à 17h00. Souhaitez-vous confirmer avec votre numéro ? 📅'
+            }
+        };
+
+        let currentLang = 'ar';
+
+        function changeLanguage(lang) {
+            currentLang = lang;
+            const t = translations[lang];
+            const body = document.getElementById('bodyTag');
+            body.dir = t.dir;
+            body.className = `bg-slate-950 text-slate-100 antialiased ${t.font}`;
+
+            document.getElementById('heroBadge').innerHTML = t.heroBadge;
+            document.getElementById('heroTitle').innerHTML = t.heroTitle;
+            document.getElementById('heroDesc').innerText = t.heroDesc;
+            document.getElementById('demoTitle').innerText = t.demoTitle;
+            document.getElementById('initialMsg').innerText = t.initialMsg;
+            document.getElementById('userInput').placeholder = t.inputPlace;
+        }
+
+        function handleSend() {
+            const input = document.getElementById('userInput');
+            const chatBox = document.getElementById('chatBox');
+            const text = input.value.trim();
+            if (!text) return;
+
+            // User Message
+            const uDiv = document.createElement('div');
+            uDiv.className = `flex ${currentLang === 'ar' ? 'justify-end' : 'justify-end'}`;
+            uDiv.innerHTML = `<div class="bg-indigo-600 text-white p-2.5 rounded-2xl max-w-xs">${text}</div>`;
+            chatBox.appendChild(uDiv);
+            input.value = '';
+            chatBox.scrollTop = chatBox.scrollHeight;
+
+            // AI Smart Response
+            setTimeout(() => {
+                const aiDiv = document.createElement('div');
+                aiDiv.className = 'flex items-start gap-2';
+                aiDiv.innerHTML = `<div class="bg-indigo-600/20 border border-indigo-500/30 text-indigo-200 p-2.5 rounded-2xl max-w-xs">${translations[currentLang].replyMsg}</div>`;
+                chatBox.appendChild(aiDiv);
+                chatBox.scrollTop = chatBox.scrollHeight;
+            }, 600);
+        }
+
+        function openPaymentModal(price) {
+            document.getElementById('paymentModal').classList.remove('hidden');
+            document.getElementById('paymentModal').classList.add('flex');
+        }
+
+        function closeModal() {
+            document.getElementById('paymentModal').classList.add('hidden');
+            document.getElementById('paymentModal').classList.remove('flex');
+        }
+    </script>
+</body>
+  </html>
