@@ -46,6 +46,13 @@
   <!-- ===== Styles (بديل Tailwind الكامل) ===== -->
   <link rel="stylesheet" href="styles.css" />
 
+  <!-- ===== PWA ===== -->
+  <link rel="manifest" href="manifest.webmanifest" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="AutoBook" />
+
   <!-- ===== Structured Data (JSON-LD) ===== -->
   <script type="application/ld+json">
   {
@@ -95,6 +102,13 @@
       </a>
       <div class="flex items-center gap-3">
         <select id="langSelect" class="lang-select" aria-label="Language"></select>
+        <button id="installBtn" class="install-btn hidden" aria-label="تثبيت التطبيق" title="تثبيت التطبيق">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+            <polyline points="7 10 12 15 17 10"/>
+            <line x1="12" y1="15" x2="12" y2="3"/>
+          </svg>
+        </button>
         <a href="#pricing" class="btn-primary hidden sm:inline-flex text-sm px-4 py-2" data-i18n="hero_cta"></a>
       </div>
     </nav>
@@ -335,5 +349,16 @@
 
   <!-- ================= APP ================= -->
   <script src="app.js"></script>
+
+  <!-- ================= PWA: تسجيل Service Worker ================= -->
+  <script>
+    if ("serviceWorker" in navigator) {
+      window.addEventListener("load", () => {
+        navigator.serviceWorker.register("./sw.js").catch((err) => {
+          console.warn("SW registration failed:", err);
+        });
+      });
+    }
+  </script>
 </body>
 </html>

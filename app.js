@@ -384,6 +384,49 @@ function init() {
   initChat();
   initModal();
   observeReveals();
+  initInstallBtn();
+  registerServiceWorker();
 }
 
 document.addEventListener("DOMContentLoaded", init);
+
+/* ============================================================
+   11) PWA — زر "تثبيت التطبيق"
+   ============================================================ */
+let deferredInstallPrompt = null;
+
+function initInstallBtn() {
+  const btn = $("installBtn");
+  if (!btn) return;
+
+  window.addEventListener("beforeinstallprompt", (e) => {
+    e.preventDefault();
+    deferredInstallPrompt = e;
+    btn.classList.remove("hidden");
+  });
+
+  btn.addEventListener("click", async () => {
+    if (!deferredInstallPrompt) return;
+    deferredInstallPrompt.prompt();
+    const { outcome } = await deferredInstallPrompt.userChoice;
+    if (outcome === "accepted") {
+      btn.classList.add("hidden");
+    }
+    deferredInstallPrompt = null;
+  });
+
+  window.addEventListener("appinstalled", () => {
+    btn.classList.add("hidden");
+  });
+}
+
+/* ============================================================
+   12) PWA — تسجيل Service Worker (العمل دون اتصال)
+   ============================================================ */
+function registerServiceWorker() {
+  if ("serviceWorker" in navigator) {
+    navigator.serviceWorker.register("./sw.js").catch((err) => {
+      console.warn("SW registration failed:", err);
+    });
+  }
+}
